@@ -25,7 +25,6 @@ import uk.co.arlodev.testapp.databinding.ActivityMapsBinding;
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap map;
-    private ActivityMapsBinding binding;
 
     private final String[] neededPermissions = new String[] {
         android.Manifest.permission.ACCESS_FINE_LOCATION,
@@ -40,12 +39,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = ActivityMapsBinding.inflate(getLayoutInflater());
+        uk.co.arlodev.testapp.databinding.ActivityMapsBinding binding = ActivityMapsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
+        assert mapFragment != null;
         mapFragment.getMapAsync(this);
     }
 
