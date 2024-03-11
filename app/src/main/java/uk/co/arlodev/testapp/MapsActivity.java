@@ -20,7 +20,6 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.material.textview.MaterialTextView;
 
 import uk.co.arlodev.testapp.databinding.ActivityMapsBinding;
 
@@ -54,8 +53,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         vehicles = new Vehicles(() -> {
             Log.i("Vehicles", vehicles.xmlStr);
             runOnUiThread(() -> {
-                MaterialTextView button = (MaterialTextView)findViewById(R.id.button);
-                button.setText("Done!");
                 findViewById(R.id.RefreshProgress).setVisibility(View.INVISIBLE);
                 findViewById(R.id.RefreshIcon).setVisibility(View.VISIBLE);
             });
