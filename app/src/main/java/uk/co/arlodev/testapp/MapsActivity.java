@@ -9,6 +9,7 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
@@ -55,8 +56,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             runOnUiThread(() -> {
                 MaterialTextView button = (MaterialTextView)findViewById(R.id.button);
                 button.setText("Done!");
+                findViewById(R.id.RefreshProgress).setVisibility(View.INVISIBLE);
+                findViewById(R.id.RefreshIcon).setVisibility(View.VISIBLE);
             });
         });
+    }
+
+    public void refresh(View v) {
+        findViewById(R.id.RefreshIcon).setVisibility(View.INVISIBLE);
+        findViewById(R.id.RefreshProgress).setVisibility(View.VISIBLE);
+        vehicles.reload();
     }
 
     /**

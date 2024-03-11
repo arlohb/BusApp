@@ -17,7 +17,7 @@ public class Vehicles {
     public String xmlStr;
     private final Runnable whenLoaded;
 
-    public void sendRequest() {
+    private void sendRequest() {
         String apiKey = BuildConfig.BUS_API_KEY;
 
         OkHttpClient client = new OkHttpClient();
@@ -45,8 +45,12 @@ public class Vehicles {
         });
     }
 
+    public void reload() {
+        sendRequest();
+    }
+
     public Vehicles(Runnable whenLoaded) {
         this.whenLoaded = whenLoaded;
-        sendRequest();
+        reload();
     }
 }

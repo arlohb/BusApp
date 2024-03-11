@@ -32,17 +32,45 @@
                 map:layout_constraintEnd_toEndOf="parent"
                 map:layout_constraintTop_toTopOf="parent" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/RefreshButton"
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/RefreshContainer"
                 style="@style/Widget.Material3.Button.IconButton.Filled.Tonal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                map:icon="@drawable/baseline_refresh_24"
-                map:iconSize="30dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:onClick="refresh"
+                android:visibility="visible"
+                map:cardBackgroundColor="@color/m3_filled_icon_button_container_color_selector"
+                map:contentPadding="3dp"
                 map:layout_constraintEnd_toStartOf="@+id/GPSButton"
-                map:layout_constraintTop_toTopOf="parent" />
+                map:layout_constraintTop_toTopOf="parent"
+                map:strokeWidth="0dp">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/RefreshIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="12dp"
+                    android:scaleType="centerInside"
+                    android:scaleX="1.25"
+                    android:scaleY="1.25"
+                    android:visibility="invisible"
+                    map:srcCompat="@drawable/baseline_refresh_24"
+                    map:tint="@color/m3_icon_button_icon_color_selector" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.progressindicator.CircularProgressIndicator
+                android:id="@+id/RefreshProgress"
+                style="@style/Widget.Material3.CircularProgressIndicator.Small"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:indeterminate="true"
+                map:layout_constraintBottom_toBottomOf="@+id/RefreshContainer"
+                map:layout_constraintEnd_toEndOf="@+id/RefreshContainer"
+                map:layout_constraintStart_toStartOf="@+id/RefreshContainer"
+                map:layout_constraintTop_toTopOf="@+id/RefreshContainer"
+                map:trackCornerRadius="4dp" />
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/materialCardView"
@@ -99,12 +127,6 @@
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        map:layout_constraintBottom_toBottomOf="parent"
-        map:layout_constraintEnd_toEndOf="parent"
-        map:layout_constraintHorizontal_bias="0.0"
-        map:layout_constraintStart_toStartOf="parent"
-        map:layout_constraintTop_toTopOf="parent"
-        map:layout_constraintVertical_bias="1.0"
         map:mapType="hybrid"
         map:uiZoomControls="false"
         tools:context=".MapsActivity" />
