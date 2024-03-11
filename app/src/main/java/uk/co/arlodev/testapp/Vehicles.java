@@ -1,8 +1,6 @@
 package uk.co.arlodev.testapp;
 
-import android.app.Activity;
 import android.util.Log;
-import android.widget.Button;
 
 import androidx.annotation.NonNull;
 
@@ -15,9 +13,9 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class Vehicles {
-    String xmlStr;
-    Button button;
-    Activity activity;
+    // TODO make private
+    public String xmlStr;
+    private final Runnable whenLoaded;
 
     public void sendRequest() {
         String apiKey = BuildConfig.BUS_API_KEY;
@@ -41,18 +39,14 @@ public class Vehicles {
                     return;
                 }
                 xmlStr = response.body().string();
-                Log.i("Vehicles", xmlStr);
 
-                activity.runOnUiThread(() -> {
-                    button.setText("Done!");
-                });
+                whenLoaded.run();
             }
         });
     }
 
-    public Vehicles(Button button, Activity activity) {
-        this.button = button;
-        this.activity = activity;
+    public Vehicles(Runnable whenLoaded) {
+        this.whenLoaded = whenLoaded;
         sendRequest();
     }
 }

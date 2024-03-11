@@ -26,6 +26,7 @@ import uk.co.arlodev.testapp.databinding.ActivityMapsBinding;
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap map;
+    Vehicles vehicles;
 
     private final String[] neededPermissions = new String[] {
         android.Manifest.permission.ACCESS_FINE_LOCATION,
@@ -49,8 +50,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         assert mapFragment != null;
         mapFragment.getMapAsync(this);
 
-        Button button = (Button)findViewById(R.id.button);
-        new Vehicles(button, this);
+        vehicles = new Vehicles(() -> {
+            Log.i("Vehicles", vehicles.xmlStr);
+            runOnUiThread(() -> {
+                Button button = (Button)findViewById(R.id.button);
+                button.setText("Done!");
+            });
+        });
     }
 
     /**
