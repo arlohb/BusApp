@@ -78,7 +78,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 new LatLng(1,-2),
             };
 
-            for (Vehicles.Vehicle vehicle : vehicles.vehicles) {
+            for (Vehicle vehicle : vehicles.vehicles) {
                 LatLng location = vehicle.vehicleLocation;
 
                 LatLng[] points2 = points.clone();
@@ -157,7 +157,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         ui.setTiltGesturesEnabled(false);
 
         map.setOnPolygonClickListener((polygon) -> {
-            Vehicles.Vehicle vehicle = (Vehicles.Vehicle)polygon.getTag();
+            Vehicle vehicle = (Vehicle)polygon.getTag();
             if (vehicle == null) return;
             Log.i("MapsActivity", vehicle.lineRef);
             Log.i("MapsActivity", vehicle.recordedAtTime.toString());
