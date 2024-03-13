@@ -43,7 +43,7 @@
                 android:onClick="refresh"
                 android:visibility="visible"
                 map:cardBackgroundColor="@color/m3_filled_icon_button_container_color_selector"
-                map:contentPadding="3dp"
+                map:contentPadding="2dp"
                 map:layout_constraintEnd_toStartOf="@+id/GPSButton"
                 map:layout_constraintTop_toTopOf="parent"
                 map:strokeWidth="0dp">
