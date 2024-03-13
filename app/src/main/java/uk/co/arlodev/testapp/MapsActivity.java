@@ -64,42 +64,35 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         vehicles = new Vehicles(() -> {
             runOnUiThread(() -> {
-                findViewById(R.id.RefreshProgress).setVisibility(View.INVISIBLE);
-                findViewById(R.id.RefreshIcon).setVisibility(View.VISIBLE);
-
-                @ColorInt int fill = getColorAttr(com.google.android.material.R.attr.colorSecondary);
-
-                double scale = 0.0006;
-                LatLng[] points = new LatLng[] {
-                    new LatLng(-1,-2),
-                    new LatLng(-1,2),
-                    new LatLng(0,3),
-                    new LatLng(1,2),
-                    new LatLng(1,-2),
-                };
-
-//                for (int i = 0; i < points.length; i++) {
-//                    LatLng point = points[i];
-//                    point = new LatLng(point.latitude * scale, point.longitude * scale);
-//                    points[i] = point;
-//                }
-
                 polygons.forEach(Polygon::remove);
+            });
 
-                for (Vehicles.Vehicle vehicle : vehicles.vehicles) {
-                    LatLng location = vehicle.vehicleLocation;
+            @ColorInt int fill = getColorAttr(com.google.android.material.R.attr.colorSecondary);
 
-                    LatLng[] points2 = points.clone();
-                    for (int i = 0; i < points2.length; i++) {
-                        Log.i("MapsActivity", vehicle.recordedAtTime.toString());
-                        LatLng point = points2[i];
-                        point = rotate(point, vehicle.bearing);
-                        point = new LatLng(point.latitude, point.longitude / Math.abs(Math.cos(Math.toRadians(location.latitude))));
-                        point = new LatLng(point.latitude * scale, point.longitude * scale);
-                        point = new LatLng(point.latitude + location.latitude, point.longitude + location.longitude);
-                        points2[i] = point;
-                    }
+            double scale = 0.0006;
+            LatLng[] points = new LatLng[] {
+                new LatLng(-1,-2),
+                new LatLng(-1,2),
+                new LatLng(0,3),
+                new LatLng(1,2),
+                new LatLng(1,-2),
+            };
 
+            for (Vehicles.Vehicle vehicle : vehicles.vehicles) {
+                LatLng location = vehicle.vehicleLocation;
+
+                LatLng[] points2 = points.clone();
+                for (int i = 0; i < points2.length; i++) {
+                    Log.i("MapsActivity", vehicle.recordedAtTime.toString());
+                    LatLng point = points2[i];
+                    point = rotate(point, vehicle.bearing);
+                    point = new LatLng(point.latitude, point.longitude / Math.abs(Math.cos(Math.toRadians(location.latitude))));
+                    point = new LatLng(point.latitude * scale, point.longitude * scale);
+                    point = new LatLng(point.latitude + location.latitude, point.longitude + location.longitude);
+                    points2[i] = point;
+                }
+
+                runOnUiThread(() -> {
                     Polygon polygon = map.addPolygon(new PolygonOptions()
                         .addAll(Arrays.asList(points2))
                         .strokeWidth(0)
@@ -107,10 +100,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         .clickable(true));
                     polygon.setTag(vehicle);
                     polygons.add(polygon);
-                }
+                });
+            }
 
-                Log.i("MapsActivity", Integer.toString(vehicles.vehicles.size()));
+            runOnUiThread(() -> {
+                findViewById(R.id.RefreshProgress).setVisibility(View.INVISIBLE);
+                findViewById(R.id.RefreshIcon).setVisibility(View.VISIBLE);
             });
+
+            Log.i("MapsActivity", Integer.toString(vehicles.vehicles.size()));
         });
     }
 
