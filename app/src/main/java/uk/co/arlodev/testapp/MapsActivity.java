@@ -63,9 +63,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
 
         vehicles = new Vehicles(() -> {
-            runOnUiThread(() -> {
-                polygons.forEach(Polygon::remove);
-            });
+            runOnUiThread(() -> polygons.forEach(Polygon::remove));
 
             @ColorInt int fill = getColorAttr(com.google.android.material.R.attr.colorSecondary);
 
@@ -117,11 +115,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         final double y = point.latitude;
 
         final double theta = Math.toRadians(degrees);
-        final double cost = Math.cos(theta);
-        final double sint = Math.sin(theta);
+        final double cosT = Math.cos(theta);
+        final double sinT = Math.sin(theta);
 
-        final double x2 = x * cost - y * sint;
-        final double y2 = x * sint + y * cost;
+        final double x2 = x * cosT - y * sinT;
+        final double y2 = x * sinT + y * cosT;
 
         return new LatLng(y2, x2);
     }
@@ -130,7 +128,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         @ColorInt int fill;
         try (TypedArray ta = obtainStyledAttributes(new int[] { id })) {
             fill = ta.getColor(0, 0);
-        };
+        }
         return fill;
     }
 
@@ -168,7 +166,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             return;
         }
         map.setMyLocationEnabled(true);
-        myLocation.getMyCameraUpdate(cameraUpdate -> map.animateCamera(cameraUpdate));
+        myLocation.getMyCameraUpdate(map::animateCamera);
     }
 
     @SuppressLint("MissingPermission")
@@ -179,6 +177,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             return;
         }
         map.setMyLocationEnabled(true);
-        myLocation.getMyCameraUpdate(cameraUpdate -> map.animateCamera(cameraUpdate));
+        myLocation.getMyCameraUpdate(map::animateCamera);
     }
 }
